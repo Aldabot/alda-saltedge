@@ -23,13 +23,13 @@ const createCustomer = async (identifier) => {
   }
 }
 
-const createLogin = async (customerId, username, password) => {
+const createLogin = async (customerId, username, password, provider) => {
   try {
     const { data: { data }} =  await saltedge.post('logins', {
       data: {
         customer_id: customerId,
         country_code: 'ES',
-        provider_code: 'sabadell_es',
+        provider_code: provider,
         fetch_scopes: [ 'accounts', 'transactions' ],
         credentials: { login: username, password },
         daily_refresh: true
