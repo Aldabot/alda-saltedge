@@ -43,7 +43,7 @@ const createLogin = async (customerId, username, password) => {
   }
 }
 
-module.experts = {
+module.exports = {
   createCustomer,
   createLogin
 }
