@@ -43,5 +43,7 @@ const createLogin = async (customerId, username, password) => {
   }
 }
 
-// createCustomer(1).then(res => console.log('res', res)).catch(err => console.error('err', err))
-// createLogin(2452332, '', '').then(res => console.log('res', res)).catch(err => console.error('err', err))
+module.experts = {
+  createCustomer,
+  createLogin
+}
