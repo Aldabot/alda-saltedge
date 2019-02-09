@@ -18,6 +18,7 @@ const createCustomer = async (identifier) => {
     return data
   }
   catch(err) {
+    console.error(err)
     const { status, data: { error_class, error_message} } = err.response
     throw { status, error_class, error_message }
   }
@@ -43,7 +44,31 @@ const createLogin = async (customerId, username, password, provider) => {
   }
 }
 
+const getLoginStatus = async(loginId) => {
+  // status can be success, failed, or attempting
+  // should add attemtps-stages: https://docs.saltedge.com/account_information/v4/#attempts-stages
+  try {
+    const {
+      data: {
+        data: {
+          last_attempt: { finished, fail_at, success_at }
+        }
+      }
+    } = await saltedge.get(`logins/${loginId}`)
+
+    if(!finished) {
+      return 'attempting'
+    } else if(success_at) {
+      return 'success'
+    }
+    return 'failed'
+  } catch(err) {
+    console.error(err)
+  }
+}
+
 module.exports = {
   createCustomer,
-  createLogin
+  createLogin,
+  getLoginStatus
 }
